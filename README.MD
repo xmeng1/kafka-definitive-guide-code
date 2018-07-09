@@ -1,5 +1,25 @@
+# Learning Note
 
 
+## Producer
+
+### Serializers
+
+#### Serializing Using Apache Avro
+
+The book code missing a lot of code and configuration, and I use the Lenses Kafka to finish this part demo.
+
+1. run lenses docker by compose: `./lenses-kafka.bat` or run the cmd in the file.
+2. add scheme base on the `customer.avsc`
+
+
+![lenses-scheme](doc/lenses-scheme.png)
+
+3. add maven dependency `kafka-avro-serializer`
+4. run the `mvn avro:scheme` generate `Customer.java`
+5. run unit test : `send message with Avro`
+
+# Note
 ```bash
 docker run -e ADV_HOST=127.0.0.1 -e EULA="https://dl.lenses.stream/d/?id=91a1302c-7fef-490b-ae60-3c187a44e7f1" --rm -p 3030:3030 -p 9092:9092 -p 2181:2181 -p 8081: 8081 -p 9581:9581 -p 9582:9582 -p 9584:9584 -p 9585:9585 landoop/kafka-lenses-dev
 

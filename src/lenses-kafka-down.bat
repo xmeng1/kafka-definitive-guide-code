@@ -1,0 +1,1 @@
+docker-compose -f main/docker/lenses-kafka.yml down

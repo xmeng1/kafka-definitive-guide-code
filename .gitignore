@@ -68,3 +68,4 @@ fabric.properties
 .idea/*
 *.iml
 /src/main/docker/data/*
+/src/main/java/science/mengxin/java/kafka/guide/model/avro/*.java

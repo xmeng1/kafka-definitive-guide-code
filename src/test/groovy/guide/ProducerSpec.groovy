@@ -1,7 +1,9 @@
 package guide
 
+import io.confluent.kafka.serializers.KafkaAvroSerializer
 import org.apache.kafka.clients.producer.Callback
 import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.clients.producer.RecordMetadata
 import science.mengxin.java.kafka.guide.KafkaGuideConst
@@ -18,6 +20,7 @@ class ProducerSpec extends Specification {
     ProducerRecord<String, String> record
     def setup() {
         kafkaProps.put("bootstrap.servers", "127.0.0.1:9092");
+
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer",
                 "org.apache.kafka.common.serialization.StringSerializer");
@@ -96,8 +99,35 @@ class ProducerSpec extends Specification {
         then:
         result1
         println(result1)
+    }
 
 
+    def "send message with Avro" () {
+        kafkaProps.put("key.serializer",
+                "io.confluent.kafka.serializers.KafkaAvroSerializer");
+        kafkaProps.put("value.serializer",
+                "io.confluent.kafka.serializers.KafkaAvroSerializer");
+        kafkaProps.put("schema.registry.url", "http://localhost:8081");
+//        kafkaProps.put("value.serializer", KafkaAvroSerializer.class.getName());
+        int wait = 500;
+
+        Producer<String, science.mengxin.java.kafka.guide.model.avro.Customer> producerAvro = new KafkaProducer<>(kafkaProps);
+        // We keep producing new events until someone ctrl-c
+        science.mengxin.java.kafka.guide.model.avro.Customer customer = new science.mengxin.java.kafka.guide.model.avro.Customer();
+        customer.setEmail("xx@gmail.com")
+        customer.setId(10)
+        customer.setName("xx")
+
+        System.out.println("Generated customer " +
+                customer.toString());
+        ProducerRecord<String, science.mengxin.java.kafka.guide.model.avro.Customer> record =
+                new ProducerRecord<>(KafkaGuideConst.TOPIC_GUIDE,
+                        String.valueOf(customer.getId()), customer);
+        when:
+        String result1 = producerAvro.send(record).get();
+
+        then:
+        result1
 
     }
 }
