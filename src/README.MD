@@ -8,6 +8,18 @@ docker stop jolly_davinci
 ```
 
 
+Into Kafka Container
+
+```bash
+docker exec -it docker_lenses-kafka_1 /bin/bash
+cd /opt/landoop/kafka/bin
+
+
+docker exec -it docker_kafka1_1 /bin/bash
+cd /opt/kafka/bin
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic guide --from-beginning
+```
+
 
 ```bash
 # ********************************************************************************

@@ -67,3 +67,4 @@ fabric.properties
 .idea/httpRequests
 .idea/*
 *.iml
+/src/main/docker/data/*
