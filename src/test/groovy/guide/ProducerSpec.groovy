@@ -5,6 +5,8 @@ import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.clients.producer.RecordMetadata
 import science.mengxin.java.kafka.guide.KafkaGuideConst
+import science.mengxin.java.kafka.guide.model.Customer
+import science.mengxin.java.kafka.guide.model.CustomerSerializer
 import spock.lang.Specification
 import spock.util.concurrent.AsyncConditions
 
@@ -23,6 +25,7 @@ class ProducerSpec extends Specification {
         record =
                 new ProducerRecord<>(KafkaGuideConst.TOPIC_GUIDE, "Precision Products", "France");
     }
+
 
     def "send message Synchronously"() {
         given:
@@ -70,5 +73,31 @@ class ProducerSpec extends Specification {
         result
         println(result)
         asyncConditions.await(1000 as Double)
+    }
+
+
+    def "send custom message"() {
+        given: "object"
+        Customer customer = new Customer(10, "Alice")
+
+        and: "create record for customer"
+        ProducerRecord<String, Customer> customerRecord =
+                new ProducerRecord<>(KafkaGuideConst.TOPIC_GUIDE, "alice", customer);
+        and: "config the serializer for producer"
+        kafkaProps.put("value.serializer", CustomerSerializer.class.getName());
+        KafkaProducer producerNew = new KafkaProducer<String, String>(kafkaProps);
+        when: "send message"
+        String result1;
+        try {
+            result1 = producerNew.send(customerRecord).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        then:
+        result1
+        println(result1)
+
+
+
     }
 }
