@@ -19,3 +19,9 @@ services:
             - ./data/kafka:/kafka
         ports:
             - 9092:9092
+    schema-registry:
+        image: confluentinc/cp-schema-registry:5.0.0-beta30
+        environment:
+            SCHEMA_REGISTRY_HOST_NAME: localhost
+        ports:
+            - 8081:8081
