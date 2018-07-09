@@ -1,0 +1,32 @@
+version: '2'
+services:
+#    zookeeper:
+#        image: wurstmeister/zookeeper:3.4.6
+#        ports:
+#          - 2181:2181
+#    lenses-kafka:
+#        image: wurstmeister/kafka:1.0.0
+#        environment:
+#            KAFKA_ADVERTISED_HOST_NAME: localhost
+#            KAFKA_ADVERTISED_PORT: 9092
+#            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#            KAFKA_CREATE_TOPICS: "topic-jhipster:1:1"
+#        ports:
+#            - 9092:9092
+# docker run -e ADV_HOST=127.0.0.1 -e EULA="https://dl.lenses.stream/d/?id=91a1302c-7fef-490b-ae60-3c187a44e7f1" --rm -p 3030:3030 -p 9092:9092 -p 2181:2181 -p 8081: 8081 -p 9581:9581 -p 9582:9582 -p 9584:9584 -p 9585:9585 landoop/kafka-lenses-dev
+    lenses-kafka:
+        image: landoop/kafka-lenses-dev:2.0.13
+        environment:
+          ADV_HOST: 127.0.0.1
+          EULA: https://dl.lenses.stream/d/?id=91a1302c-7fef-490b-ae60-3c187a44e7f1
+        volumes:
+          - ./data/lenses:/data
+        ports:
+          - 3030:3030  # web
+          - 9092:9092  # kafka
+          - 2181:2181
+          - 8081:8081
+          - 9581:9581
+          - 9582:9582
+          - 9584:9584
+          - 9585:9585

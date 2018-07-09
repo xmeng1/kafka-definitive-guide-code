@@ -1,0 +1,27 @@
+version: '2'
+services:
+    zookeeper:
+        image: wurstmeister/zookeeper:3.4.6
+        ports:
+          - 2181:2181
+    kafka1:
+        image: wurstmeister/kafka:2.11-1.1.0
+#        hostname: kk1
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: localhost
+            KAFKA_ADVERTISED_PORT: 9092
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            KAFKA_BROKER_ID: 1
+            KAFKA_NUM_PARTITIONS: 3
+            KAFKA_CREATE_TOPICS: "guide"
+        volumes:
+#            - /var/run/docker.sock:/var/run/docker.sock
+            - ./data/kafka:/kafka
+        ports:
+            - 9092:9092
+    schema-registry:
+        image: confluentinc/cp-schema-registry:5.0.0-beta30
+        environment:
+            SCHEMA_REGISTRY_HOST_NAME: localhost
+        ports:
+            - 8081:8081

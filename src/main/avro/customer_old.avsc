@@ -1,0 +1,23 @@
+{
+  "namespace": "science.mengxin.java.kafka.guide.model.avro",
+  "type": "record",
+  "name": "CustomerOld",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "faxNumber",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": "null"
+    }
+  ]
+}
