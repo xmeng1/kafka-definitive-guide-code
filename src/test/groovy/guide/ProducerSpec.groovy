@@ -115,6 +115,7 @@ class ProducerSpec extends Specification {
         // We keep producing new events until someone ctrl-c
         science.mengxin.java.kafka.guide.model.avro.Customer customer = new science.mengxin.java.kafka.guide.model.avro.Customer();
         customer.setEmail("xx@gmail.com")
+        // if set id, the message will be set specific partition based on hash of key
         customer.setId(10)
         customer.setName("xx")
 
@@ -128,6 +129,18 @@ class ProducerSpec extends Specification {
 
         then:
         result1
+
+        when:
+        // if not set, key, the data will be set random!
+        science.mengxin.java.kafka.guide.model.avro.Customer customer2 = new science.mengxin.java.kafka.guide.model.avro.Customer();
+        customer2.setEmail("xx@gmail.com")
+        customer2.setName("xx")
+        ProducerRecord<String, science.mengxin.java.kafka.guide.model.avro.Customer> record2 =
+                new ProducerRecord<>(KafkaGuideConst.TOPIC_GUIDE, customer2);
+        String result2 = producerAvro.send(record2).get();
+
+        then:
+        result2
 
     }
 }
