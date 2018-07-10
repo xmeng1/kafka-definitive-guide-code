@@ -17,6 +17,8 @@ services:
     lenses-kafka:
         image: landoop/kafka-lenses-dev:2.0.13
         environment:
+          # if want to access in LAN, need to change IP to local computer IP address.
+          # ADV_HOST: 192.168.230.129
           ADV_HOST: 127.0.0.1
           EULA: https://dl.lenses.stream/d/?id=91a1302c-7fef-490b-ae60-3c187a44e7f1
         volumes:

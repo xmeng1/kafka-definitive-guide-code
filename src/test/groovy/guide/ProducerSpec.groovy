@@ -19,7 +19,7 @@ class ProducerSpec extends Specification {
     KafkaProducer producer;
     ProducerRecord<String, String> record
     def setup() {
-        kafkaProps.put("bootstrap.servers", "127.0.0.1:9092");
+        kafkaProps.put("bootstrap.servers", KafkaGuideConst.KAFKA_SERVER_URL);
 
         kafkaProps.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaProps.put("value.serializer",
@@ -107,7 +107,7 @@ class ProducerSpec extends Specification {
                 "io.confluent.kafka.serializers.KafkaAvroSerializer");
         kafkaProps.put("value.serializer",
                 "io.confluent.kafka.serializers.KafkaAvroSerializer");
-        kafkaProps.put("schema.registry.url", "http://localhost:8081");
+        kafkaProps.put("schema.registry.url", KafkaGuideConst.SCHEMA_REGISTRY_URL);
 //        kafkaProps.put("value.serializer", KafkaAvroSerializer.class.getName());
         int wait = 500;
 
