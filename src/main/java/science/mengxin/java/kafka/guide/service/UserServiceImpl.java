@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
         usersMap.put("Tom", 1);
         usersMap.put("Mary", 2);
         usersMap.put("Alice", 3);
-        usersMap.put("Daisy", 4);
+        usersMap.put("Daisy", 0);
         usersMap.put("Helen", 1);
     }
 
